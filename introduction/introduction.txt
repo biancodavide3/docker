@@ -1,0 +1,18 @@
+benefits of docker include:
+1) your application will work on every machine and is very to set up
+2) it is easy to run multiple applications with completely different or even conflicting underlying software on the same machine
+3) it is easy to remove your entire application along with all its depedencies
+
+container vs virtual machine:
+a container is a lightweight environment to run your application which uses the os of the host and therefore can start quickly
+a virtual machine is an abstraction of a physical machine that has its entire os and therefore is slow to start and resource intensive
+
+workflow:
+you need to dockerize your application which is done via a DockerFile
+this file contains instruction to package your application as an image which includes all the components the application need in order to run properly
+(minimized os, libraries, environment, custom code...)
+now that we have the image we can simply run it as a container
+furthermore we can push the image to a docker registry and distribute it
+
+
+
