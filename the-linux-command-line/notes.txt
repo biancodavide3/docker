@@ -2,8 +2,8 @@ distro:
 there are many versions of distribution of linux like ubuntu debian fedora centOS arch because it is open source
 
 differences with other os:
-windows separes path with \ while linux with /
-linux is case sensitive (Echo hello will not work)
+windows separates path with \ while linux with /
+linux is case-sensitive (Echo hello will not work)
 
 prompt explained:
 user@computername:currentdirectoryA
@@ -25,8 +25,8 @@ you can navigate the filesystem with commands like: pwd, cd, ls -hal, tree
 
 package manager:
 apt (newer version) apg-get (older)
-apt install packagename
-apt update (updates the packabase database with new versions or new packages)
+apt install package name
+apt update (updates the package database with new versions or new packages)
 apt upgrade (installs new versions of packages you already have in the system)
 in ubuntu software can also be installed as a snap
 
@@ -76,7 +76,7 @@ groups john (see the groups of john)
 
 file permissions:
 in ls you see the permission string
-first character is a d or - depending if the file is a directory or not and then 3 sets of r (read) w (write) x (execute permissions)
+first character is a d or - depending on if the file is a directory or not and then 3 sets of r (read) w (write) x (execute permissions)
 the first set is for the owner of the file (usually the one who created it unless chown has been used to change the owner)
 the second is for the group of that file (usually the primary group of the owner unless chgrp has been used to change the owner)
 the third is for other users

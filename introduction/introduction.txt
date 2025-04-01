@@ -1,7 +1,7 @@
 benefits of docker include:
 1) your application will work on every machine and is very to set up
 2) it is easy to run multiple applications with completely different or even conflicting underlying software on the same machine
-3) it is easy to remove your entire application along with all its depedencies
+3) it is easy to remove your entire application along with all its dependencies
 
 container vs virtual machine:
 a container is a lightweight environment to run your application which uses the os of the host and therefore can start quickly
