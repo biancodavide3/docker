@@ -1,0 +1,7 @@
+we can deploy our applications (or microservices) as single host or cluster solution
+using a single host solution is not good because there is no high availability, meaning if there is a sudden spike of traffic
+our server maybe can't keep up, furthermore if the server goes down for any other reason, there is no service anymore
+and other downsides...
+the best approach is to use a cluster solution and the most popular and used is kubernetes aka k8s which is google's container orchestrator
+it is really complex to it needs its own course but the point is you can still continue to develop locally your microservices and applications
+with the aid of docker and when the time comes you deploy to k8s which in return is really easy to set up in the cloud with managed solutions
