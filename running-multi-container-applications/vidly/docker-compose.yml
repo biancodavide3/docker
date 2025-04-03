@@ -1,0 +1,72 @@
+# docker compose is a way of working with multiple containers in one go
+# so everything covered before to a single container still applies
+# we define them under services so we have 3 services for this application
+# frontend, backend and db
+# in frontend: we depend on the backend and specify a build path for the Dockerfile
+# that can be relative and map ports to access the application at http://localhost:3000
+# in the backend we depend on the db and specify a build path again, we also set a
+# environment variable with the database connection string
+# this is a good practice because this can be eventually overridden if the database lives elsewhere
+# note that in this connection string "db" is the name of the database service declared below
+# this is how container can communicate with each other, with their service names, as long as they live
+# on the same network
+# docker networks use dns under the hood to make communication seamless
+# our service in the current examples are in the same network because they are in the same docker compose
+# and this network is called "vidly_default" as you can see from command docker network ls
+# if you are working with different docker compose files you can define networks similarly to volumes at the bottom
+# in the backend we also define a custom entrypoint script where we
+# wait for the db to up with another custom script, run migrations because we want the database to be in a desired state before launching
+# and then start the backend service itself
+# for the db service we just pull an existing mongo image with the image: attribute and set up a volume for persistent storage
+# these volumes must be defined at the bottom like attributes with a strange syntax as well as as networks if you need them
+# note: volumes, just like networks, and really anything else that comes from the docker compose, are prefixed with "vidly"
+# which is the name of the directory where it lives, or it can be specified with a name property
+
+# in order to run the whole workflow we run
+# docker compose build - to build the images, it will pickup the docker-compose.yml default file name and execute unless you call it something else
+# and you need to specify it
+# "docker compose up -d" starts all services as containers from either pulled or built images, create volumes and networks
+# "docker compose down" basically undo docker compose up
+# "docker compose start" "docker compose stop" and similar without "compose"
+
+# notes on the general workflow when developing with the aid of docker
+# we want to set up any service or tool we need in a docker environment (like database, message queue... anything needed to build what
+# we are building using docker containers) and this is good because we keep versions under control and our personal computer clean
+# we go through the general process of developing our application locally, executing it and testing it locally, so tests and development is sped up
+# but at the same time communicating with the containers (using localhost and port mappings which doesn't even make it seem we are using docker)
+# if we are working under a microservices architecture we can just build more images, one per microservice
+# and make them communicating using networks, and this is easily deployable to k8s for example
+# at some point we are satisfied of the product so we build a custom image of our code and bundle it together with all the other dependencies
+# we had already defined using a simple docker compose file
+# this image(s) (together with, or not, its dependencies) is easily distributable in the cloud with really the best fitting solution for your needs
+
+services:
+  frontend:
+    depends_on: 
+      - backend
+    build: ./frontend
+    ports:
+      - "3000:3000"
+
+  backend: 
+    depends_on: 
+      - db
+    build: ./backend
+    ports: 
+      - "3001:3001"
+    environment: 
+      DB_URL: mongodb://db/vidly
+    command: ./docker-entrypoint.sh
+
+  db:
+    image: mongo:4.0-xenial
+    ports:
+      - "27017:27017"
+    volumes:
+      - vidly:/data/db
+
+volumes:
+  vidly:
+
+#networks:
+#  some_network:
